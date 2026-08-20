@@ -61,8 +61,10 @@ while True:
        context_size=response.usage.total_tokens
 
        
-       if context_size >= WARNING_LIMIT:
+      if context_size >= WARNING_LIMIT and context_size<MAX_CONTEXT:
         print("⚠ WARNING: Conversation is approaching the model's context limit!")
+       elif context_size>=MAX_CONTEXT:
+          print("⚠ CONTEXT LIMIT HIT.")
 
     except:
      print("Total Token: Not Available")
