@@ -1,0 +1,36 @@
+Gemini 4
+
+1. Gemini 4 Argon
+
+Gemini 3 Series
+2. Gemini 3.8 Flash
+3. Gemini 3.8 Live
+4. Gemini 3.8 Live Extended Thinking
+5. Gemini 3.8 Flash TTS
+6. Gemini 3.8 Flash-Lite TTS
+7. Gemini 3.6 Flash
+8. Gemini 3.5 Flash-Lite
+9. Gemini 3.1 Flash-Lite
+10. Gemini 3.1 Pro
+11. Gemini 3 Flash
+
+Image Models
+12. Nano Banana 2.1
+13. Nano Banana 2
+14. Nano Banana 2 Lite
+15. Nano Banana Pro
+
+Audio Models
+16. Gemini 3.5 Transcribe
+17. Gemini 3.5 Live Translate
+18. Gemini Omni Flash
+
+Embedding Models
+19. Gemini Embedding 2
+20. Gemini Embedding
+
+Other Specialized Models
+21. Gemini Robotics ER 2
+22. Gemini Robotics ER 1.6
+23. Gemini Deep Research
+24. Gemini Deep Research Max

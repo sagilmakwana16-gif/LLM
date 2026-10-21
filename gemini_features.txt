@@ -1,0 +1,63 @@
+GEMINI MODELS AND FEATURES
+
+1. Gemini 3.8 Flash
+Model ID: gemini-3.8-flash
+Features: Advanced reasoning, software development, coding, agentic workflows, and complex tasks.
+
+2. Gemini 3.7 Flash
+Features: Coding, complex tasks, agent workflows, and multi-step execution.
+
+3. Gemini 3.6 Flash
+Features: Fast responses, multimodal understanding, and general AI tasks.
+
+4. Gemini 3.5 Flash-Lite
+Features: Fast processing, cost-efficient responses, and high-volume AI applications.
+
+5. Gemini 3.1 Flash-Lite
+Features: Efficient processing, low-cost workloads, and fast AI responses.
+
+6. Gemini 3.1 Pro
+Features: Advanced reasoning, complex problem-solving, coding, and agentic applications. Availability may depend on preview status.
+
+7. Gemini 2.5 Pro
+Model ID: gemini-2.5-pro
+Features: Complex reasoning, advanced coding, difficult problem-solving, and multimodal understanding.
+
+8. Gemini 2.5 Flash
+Model ID: gemini-2.5-flash
+Features: Fast responses, reasoning, high-volume tasks, and multimodal inputs.
+
+9. Gemini 2.5 Flash-Lite
+Model ID: gemini-2.5-flash-lite
+Features: Low latency, cost efficiency, and high-throughput applications.
+
+10. Gemini 3.8 Live
+Features: Real-time voice conversations and low-latency interactive voice applications.
+
+11. Gemini 3.8 Flash TTS
+Features: Text-to-speech, expressive voice generation, and voice design.
+
+12. Gemini 3.5 Transcribe
+Features: Speech-to-text, language detection, speaker identification, and word timestamps.
+
+13. Nano Banana 2
+Features: Image generation and image editing.
+
+14. Nano Banana Pro
+Features: High-quality image generation, detailed layouts, and text rendering in images.
+
+15. Gemini Omni Flash
+Features: Video generation, video editing, keyframe interpolation, and synchronized audio.
+
+16. Gemini Embedding 2
+Features: Multimodal embeddings for text, images, video, audio, and PDFs. Useful for semantic search and RAG systems.
+
+17. Gemini Embedding
+Model ID: gemini-embedding-001
+Features: Text embeddings, semantic search, similarity matching, and retrieval-augmented generation.
+
+IMPORTANT:
+Features and availability depend on the exact model and API version. Some models may be in preview or have limited access. Check official documentation for the latest details.
+
+Official documentation:
+https://ai.google.dev/gemini-api/docs/models
