@@ -1,18 +1,21 @@
 
-import json
 import os
-
 from dotenv import load_dotenv
-
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
+from langchain_core.output_parsers import PydanticOutputParser, StrOutputParser
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.chat_history import InMemoryChatMessageHistory
+from pydantic import BaseModel, Field
+from typing import List
 from langchain_core.messages import get_buffer_string
 
 
 load_dotenv()
-
+class EmailEvaluation(BaseModel):
+    evaluation: dict = Field(description="Email evaluation")
+    identified_issues: List[str] = Field(description="Problems found")
+    suggestions: List[str] = Field(description="Suggestions for improvement")
+    improved_email: str = Field(description="Improved email")
 # 1. Initialize chat history
 chat_history = InMemoryChatMessageHistory()
 
@@ -20,10 +23,10 @@ api = os.getenv("GEMINI_API_KEY")
 
 
 # 2. Take input from user
-email_purpose = input("Enter your Email PURPOSE: ")
-email_type = input("Enter your Email TYPE: ")
-email_information = input("Enter subject information: ")
-email_ton = input("Enter your Email TONE: ")
+email_purpose = input("Enter your email purpose: ")
+email_type = input("Enter recipient type (HOD, Manager, Client):")
+email_information = input("Enter information: ")
+email_ton = input("Enter your Email tone: ")
 
 
 # 3. Save user information in history
@@ -57,7 +60,7 @@ prompt_template = ChatPromptTemplate.from_messages([
 Write an email for:
 
 Email Purpose: {email_purpose}
-Email Type: {email_type}
+Recipient Type: {email_type}
 Email Information: {email_information}
 Email Tone: {email_ton}
 """
@@ -74,8 +77,9 @@ chat_model = ChatGoogleGenerativeAI(
 
 # 6. Output parser
 output_parser = StrOutputParser()
-
-
+email_parser = PydanticOutputParser(
+    pydantic_object=EmailEvaluation
+)
 # 7. First chain
 first_chain = prompt_template | chat_model | output_parser
 
@@ -94,12 +98,12 @@ generated_email = first_chain.invoke({
 
 
 
+
 checker_prompt = ChatPromptTemplate.from_messages([
     (
         "system",
         """
 Check the email for:
-
 - Grammar
 - Clarity
 - Tone
@@ -107,29 +111,15 @@ Check the email for:
 - Completeness
 - Subject line
 
-Return only valid JSON in this format:
+Return the evaluation, identified issues, suggestions, and improved email.
 
-{{
-    "evaluation": {{
-        "grammar": "",
-        "clarity": "",
-        "tone": "",
-        "professionalism": "",
-        "completeness": "",
-        "subject_line": ""
-    }},
-    "identified_issues": [],
-    "suggestions": [],
-    "improved_email": ""
-}}
+{format_instructions}
 """
     ),
-
     (
         "human",
         """
 Check this email:
-
 {generated_email}
 """
     )
@@ -137,12 +127,13 @@ Check this email:
 
 
 # 9. Second chain
-second_chain = checker_prompt | chat_model | output_parser
+second_chain = checker_prompt | chat_model | email_parser
 
 
 # 10. Check generated email
 checked_email = second_chain.invoke({
-    "generated_email": generated_email
+    "generated_email": generated_email,
+    "format_instructions": email_parser.get_format_instructions()
 })
 
 
@@ -150,8 +141,7 @@ checked_email = second_chain.invoke({
 # OUTPUT PARSER
 
 try:
-    email_result = json.loads(checked_email)
-
+ email_result = checked_email.model_dump()
 except Exception:
     email_result = {
         "evaluation": {},
@@ -168,7 +158,11 @@ print("\n" + "=" * 60)
 print(" GENERATED EMAIL")
 print("=" * 60)
 
-print(generated_email)
+print("\nSubject:")
+print(generated_email.splitlines()[0].replace("Subject:", "").strip())
+
+print("\nEmail Body:")
+print("\n".join(generated_email.splitlines()[1:]).strip())
 
 
 
@@ -229,4 +223,3 @@ print(" CHAT HISTORY")
 print("=" * 60)
 
 print("Total messages:", len(chat_history.messages))
-
